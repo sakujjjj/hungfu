@@ -1,0 +1,35 @@
+<html>
+<head>
+    <meta charset="utf-8" /> 
+    <title>登入成功</title>
+    <link rel="stylesheet" href="{{ url_for('static',    filename='index.css') }}">
+</head>
+<body>
+
+    <div class="top">
+        <div class="toptxt">歡迎光臨，這是會員頁</div>
+    </div>
+
+    <center>
+    <h3>{{value}}，成功登入系統</h3>
+    <!-- <h3>，成功登入系統</h3> -->
+    <br/>
+    <a href="/signout">登出系統</a>
+    </center>
+    
+    <!-- <script>
+    function processFormData() {
+//取得 name 屬性為 form 的表單
+    const form = document.forms['form'];
+//取 elements 集合中 name 屬性為 name 的值
+    const name = form.elements.name.value;
+    alert("hi"+name);
+    console.log(name)
+        } -->
+    
+    
+
+    </script>
+</body>
+
+</html>
