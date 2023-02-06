@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 import mysql.connector
 
 # 建立 Application 物件
@@ -139,6 +139,47 @@ def error():
     # return "登入失敗"
     elif message == "fail":
         return render_template("fail.html")
+
+
+# 會員 API
+@app.route('/api/members', methods=['get'])
+def get_member():
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="1234",
+        database="hungfu"
+    )
+
+    # name = request.form["name"]
+    # password = request.form["password"]
+    # phone_number = request.form["phone_number"]
+    # email = request.form["email"]
+    # tsmc_id = request.form["tsmc_id"]
+
+    mycursor = mydb.cursor()
+    sql = "select json_object('id', id, 'name', name ) from member "
+
+    mycursor.execute(sql)
+    members = mycursor.fetchall()
+    # members = ",".join('%s' % id for id in members)
+    print(members)
+    print(type(members))
+    return jsonify({"members": members})
+    # return {"members": members}
+    # dic = {"members": eval(members)}
+    # return dic
+
+
+@app.route("/api/user", methods=["POST"])
+def create_user():
+    User_db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="1234",
+        database="hungfu"
+    )
+    return "ok"
 
 
 if __name__ == "__main__":
