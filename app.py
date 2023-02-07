@@ -277,7 +277,8 @@ def login_user():
             mycursor.execute(sql_name, (phone_number,))
             session["name"] = results[1]
             session["phone_number"] = results[3]
-            return redirect("/member/")
+            # return redirect("/member/"), 200
+            return jsonify({"ok": True}, 200)
         else:
             return jsonify({"error": True, "message": "登入失敗!帳號或密碼錯誤"}), 400
     except:

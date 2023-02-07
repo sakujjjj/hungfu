@@ -33,16 +33,19 @@
     <center>
         <h3>登入系統</h3>
 
-        <form action="/signin" , method="POST">
+        <!-- <form action="/api/user" , method="PATCH"> -->
+        <form id="form">
             電話<input type="text" name="phone_number">
             <br />
             密碼<input type="text" name="password">
             <br />
-            <button>登入</button>
+            <button id="singInButton">登入</button>
         </form>
 
-    </center>
 
+
+    </center>
+    <script src="/static/index.js"></script>
 </body>
 
 </html>
