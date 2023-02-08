@@ -86,7 +86,7 @@ def signin():
 
         password = request.form["password"]
         phone_number = request.form["phone_number"]
-
+        print("password:", password)
         # 比對資料庫帳密
         sql = "select * from member where phone_number = %s and password = %s"
         mycursor.execute(sql, (phone_number, password))
@@ -185,7 +185,8 @@ def get_member():
 @app.route("/api/user", methods=["GET"])
 def get_user():
     print("phone_number:", session["phone_number"])
-    if session["state"] == "login":
+    if session["phone_number"] != "":
+        # if session["state"] == "login":
         try:
             connection_object = connection_pool.get_connection()
             mycursor = connection_object.cursor(buffered=True)
@@ -193,15 +194,18 @@ def get_user():
             sql = "select * from member where phone_number = %s"
             mycursor.execute(sql, (session["phone_number"],))
             results = mycursor.fetchone()
-            print("results:", results)
-            return jsonify({
-                "id": results[0],
-                "name": session["name"],
-                "phone_number": results[3],
-                "email": results[4],
-                "TSMC_ID": results[5],
-                "LEVEL": results[6]
-            })
+            print("GET_results:", results)
+
+            return jsonify({"data":
+                            {
+                                "id": results[0],
+                                "name": session["name"],
+                                "phone_number": results[3],
+                                "email": results[4],
+                                "TSMC_ID": results[5],
+                                "LEVEL": results[6]
+                            }
+                            })
         finally:
             if connection_object.is_connected():
                 mycursor.close()
@@ -210,7 +214,7 @@ def get_user():
     else:
         return jsonify({"data": None}), 200
 
-# register a new user API
+# sign up a new user API
 
 
 @app.route("/api/user", methods=["POST"])
@@ -219,13 +223,14 @@ def create_user():
 
         connection_object = connection_pool.get_connection()
         mycursor = connection_object.cursor(buffered=True)
-        name = request.form["name"]
-        password = request.form["password"]
-        phone_number = request.form["phone_number"]
-        email = request.form["email"]
-        tsmc_id = request.form["tsmc_id"]
-        # json_data = request.get_json()
-        # print(json_data)
+        json_data = request.get_json()
+        print("json_data:", json_data)
+        name = json_data["name"]
+        password = json_data["password"]
+        phone_number = json_data["phone_number"]
+        email = json_data["email"]
+        tsmc_id = json_data["tsmc_id"]
+
         sql = "select * from member where phone_number = %s"
         print("phone_number:", phone_number)
         mycursor.execute(sql, (phone_number,))
@@ -262,14 +267,18 @@ def login_user():
         connection_object = connection_pool.get_connection()
         mycursor = connection_object.cursor(buffered=True)
 
-        password = request.form["password"]
-        phone_number = request.form["phone_number"]
-
+        print("request:", request.get_json())
+        # password = request.form["password"]
+        # phone_number = request.form["phone_number"]
+        json_data = request.get_json()
+        phone_number = json_data["phone_number"]
+        password = json_data["password"]
+        print("phone_number:", phone_number)
         # 比對資料庫帳密
         sql = "select * from member where phone_number = %s and password = %s"
         mycursor.execute(sql, (phone_number, password))
         results = mycursor.fetchone()
-        print(results)
+        print("PATCH_results:", results)
 
         if results != None:
             session["state"] = "login"
@@ -277,8 +286,11 @@ def login_user():
             mycursor.execute(sql_name, (phone_number,))
             session["name"] = results[1]
             session["phone_number"] = results[3]
+            print(session["name"])
             # return redirect("/member/"), 200
             return jsonify({"ok": True}, 200)
+
+            # return render_template("member.html", name=session["name"])
         else:
             return jsonify({"error": True, "message": "登入失敗!帳號或密碼錯誤"}), 400
     except:
