@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 import json
+import requests
 import mysql.connector
 from mysql.connector import pooling
 
@@ -31,6 +32,12 @@ connection_pool = pooling.MySQLConnectionPool(
 @app.route("/")
 def index():
 
+    base_url = 'https://api.kivaws.org/graphql?query='
+
+    graphql_query = "query{lend{loans (filters:{status:fundraising} sortBy:newest){values{id name loanAmount}}}}"
+
+    r = requests.get(base_url + graphql_query)
+    print(r.json())
     return render_template("index.html")
 
 
@@ -247,9 +254,9 @@ def create_user():
             print(val)
             connection_object.commit()
             print(mycursor.rowcount, "record inserted.")
-            return jsonify({"ok": True}, 200)
+            return jsonify({"ok": True, "message": "電話"+phone_number+"註冊成功"}), 200
         else:
-            return jsonify({"error": True, "message": "帳號已被註冊"}), 400
+            return jsonify({"error": True, "message": "電話已被註冊"}), 400
     except:
         return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
     finally:
@@ -288,7 +295,7 @@ def login_user():
             session["phone_number"] = results[3]
             print(session["name"])
             # return redirect("/member/"), 200
-            return jsonify({"ok": True}, 200)
+            return jsonify({"ok": True}), 200
 
             # return render_template("member.html", name=session["name"])
         else:
@@ -311,7 +318,7 @@ def logout():
     session["state"] = ""
     session["name"] = ""
     session["phone_number"] = ""
-    return jsonify({"ok": True}, 200)
+    return jsonify({"ok": True}), 200
 
 
 if __name__ == "__main__":

@@ -6,8 +6,9 @@ fetch("api/user")
     .then(res => res.json())
     // .then(data => console.log(data["data"]))
     .then((data) => {
-
+        // console.log("method:GET:", data)
         console.log("user info:", data["data"])
+
         if (data["data"] == null) {
             login_user_box.style.display = "none";
 
@@ -19,17 +20,8 @@ fetch("api/user")
             // console.log(data["data"]["name"])
         }
     })
+
 // method:POST sign up
-
-// console.log(user_name)
-
-// let userInfo2 = {
-//     "name": user_name,
-//     "phone_number": phone_number,
-//     "password": password,
-//     "email": email,
-//     "tsmc_id": tsmc_id
-// }
 let sign_up_button = document.getElementById("sign_up_button");
 sign_up_button.addEventListener("click", function () {
     let sign_up_user_name = document.getElementById("sign_up_user_name").value
@@ -44,6 +36,8 @@ sign_up_button.addEventListener("click", function () {
         "email": sign_up_email,
         "tsmc_id": sign_up_tsmc_id
     });
+    let sign_up_fail = document.getElementById("sign_up_fail");
+    let sign_up_success = document.getElementById("sign_up_success");
     console.log("userInfo:", userInfo);
     console.log("userInfo:", typeof (userInfo));
     fetch("api/user", {
@@ -54,7 +48,16 @@ sign_up_button.addEventListener("click", function () {
         .then(res => res.json())
         .then(data => {
             console.log("method:POST", data);
-            location.reload();
+            if (data["ok"] == true) {
+                sign_up_fail.style.display = "none";
+                sign_up_success.style.display = "block";
+                sign_up_success.textContent = data["message"];
+                console.log(sign_up_success)
+            } else {
+                sign_up_fail.style.display = "block";
+                sign_up_fail.textContent = data["message"];
+                console.log(sign_up_fail)
+            }
         })
 })
 
@@ -63,7 +66,8 @@ let loginButton = document.getElementById("log_in_button")
 loginButton.addEventListener("click", function () {
     let password = document.getElementById("login_password").value
     let phone_number = document.getElementById("login_phone_number").value
-    console.log(phone_number, password)
+    let login_fail = document.getElementById("login_fail")
+    // console.log(phone_number, password)
     fetch("api/user", {
         method: "PATCH",
         headers: { "content-type": "application/json" },
@@ -76,16 +80,25 @@ loginButton.addEventListener("click", function () {
 
     })
         .then(res => res.json())
-        .then(data => {
+        .then((data) => {
             console.log("method:PATCH", data);
-            location.reload();
+            if (data["ok"] == true) {
+                location.reload();
+            } else {
+                console.log("message", data["message"])
+                login_fail.style.display = "block";
+                // login_fail.innerHTML = data["message"]
+                login_fail.textContent = data["message"]
+            }
+
+            // 
         })
 
 
 })
 
-// console.log(password)
-// method:DELETE
+
+// method:DELETE log out
 let logoutButton = document.getElementById("log_out_button")
 logoutButton.addEventListener("click", function () {
     fetch("api/user", {
