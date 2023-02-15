@@ -12,7 +12,6 @@ fetch("api/user")
   })
 
 
-
 //  SHOW Ask Leave List 
 function showAskLeaveData() {
   fetch("api/staff")

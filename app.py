@@ -178,6 +178,7 @@ def show_ask_leave_list():
                 "ask_leave_day": i[2],
                 "ask_leave_reason": i[3]
             }]
+
             data.append(data)
             print(data)
             print(type(data))
