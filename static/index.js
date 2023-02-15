@@ -2,6 +2,7 @@
 // method:GET check user info
 let login_user_name = document.getElementById("login_user_name")
 let login_user_box = document.getElementById("login_user_box")
+let sign_page = document.getElementById("sign_page")
 fetch("api/user")
     .then(res => res.json())
     // .then(data => console.log(data["data"]))
@@ -15,7 +16,8 @@ fetch("api/user")
 
         } else {
             login_user_box.style.display = "block";
-            login_user_name.innerHTML = data["data"]["name"]
+            login_user_name.innerHTML = data["data"]["name"];
+            sign_page.style.display = "none";
             // console.log(login_user_name)
             // console.log(data["data"]["name"])
         }

@@ -18,54 +18,57 @@
         <h3 id="sign_up_fail"></h3>
         <h3 id="sign_up_success"></h3>
         <button id="log_out_button">登出</button>
+        <span><button><a href="/staff">進入後台</a></button></span>
+        <div id="sign_page">
+            <h3>註冊帳號 for API</h3>
+            姓名<input type="text" id="sign_up_user_name" name="name">
+            <br />
+            密碼<input type="text" id="sign_up_password" name="password">
+            <br />
+            電話<input type="text" id="sign_up_phone_number" name="phone_number" pattern="09\d{8}" required>
+            <br />
+            e-mail<input type="text" id="sign_up_email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                required>
+            <br />
+            TSMC工號<input type="text" id="sign_up_tsmc_id" name="tsmc_id">
+            <br />
+            <button type="submit" id="sign_up_button">註冊</button>
 
-        <h3>註冊帳號 for API</h3>
-        姓名<input type="text" id="sign_up_user_name" name="name">
-        <br />
-        密碼<input type="text" id="sign_up_password" name="password">
-        <br />
-        電話<input type="text" id="sign_up_phone_number" name="phone_number" pattern="09\d{8}" required>
-        <br />
-        e-mail<input type="text" id="sign_up_email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-            required>
-        <br />
-        TSMC工號<input type="text" id="sign_up_tsmc_id" name="tsmc_id">
-        <br />
-        <button type="submit" id="sign_up_button">註冊</button>
+            <h3>登入系統 for API</h3>
+            電話<input type="text" id="login_phone_number" name="phone_number">
+            <br />
+            密碼<input type="password" id="login_password" name="password">
+            <br />
+            <button type="submit" id="log_in_button">登入</button>
+            <h3 id="login_fail"></h3>
 
-        <h3>登入系統 for API</h3>
-        電話<input type="text" id="login_phone_number" name="phone_number">
-        <br />
-        密碼<input type="text" id="login_password" name="password">
-        <br />
-        <button type="submit" id="log_in_button">登入</button>
-        <h3 id="login_fail"></h3>
+            <hr>
+            <h3>註冊帳號</h3>
+            <form action="/signup" , method="POST">
+                姓名<input type="text" name="name">
+                <br />
+                密碼<input type="text" name="password">
+                <br />
+                電話<input type="text" name="phone_number" pattern="09\d{8}" required>
+                <br />
+                e-mail<input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                <br />
+                TSMC工號<input type="text" name="tsmc_id">
+                <br />
+                <button>註冊</button>
+            </form>
 
-        <hr>
-        <h3>註冊帳號</h3>
-        <form action="/signup" , method="POST">
-            姓名<input type="text" name="name">
-            <br />
-            密碼<input type="text" name="password">
-            <br />
-            電話<input type="text" name="phone_number" pattern="09\d{8}" required>
-            <br />
-            e-mail<input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
-            <br />
-            TSMC工號<input type="text" name="tsmc_id">
-            <br />
-            <button>註冊</button>
-        </form>
+            <h3>登入系統</h3>
+            <form action="/signin" , method="POST">
 
-        <h3>登入系統</h3>
-        <form action="/signin" , method="POST">
+                電話<input type="text" name="phone_number">
+                <br />
+                密碼<input type="text" name="password">
+                <br />
+                <button>登入</button>
+            </form>
 
-            電話<input type="text" name="phone_number">
-            <br />
-            密碼<input type="text" name="password">
-            <br />
-            <button>登入</button>
-        </form>
+        </div>
     </center>
     <script src="/static/index.js"></script>
 </body>
