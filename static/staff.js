@@ -14,9 +14,23 @@ fetch("api/user")
 
 //  SHOW Ask Leave List 
 function showAskLeaveData() {
+  let ask_leave_list = document.getElementById("ask_leave_list");
   fetch("api/staff")
-    .then(res => res.text())
-    .then(res => console.log(res))
+    .then(res => res.json())
+    .then(res => {
+      // console.log(res["data"][0]);
+      // console.log(res["data"].length);
+      for (i = 0; i < res["data"].length; i++) {
+        // console.log(res["data"][i]);
+        let div = document.createElement("div");
+        div.append("請假日期: " + JSON.stringify(res["data"][i]["ask_leave_day"]) + " " + "請假原因: " + JSON.stringify(res["data"][i]["ask_leave_reason"]));
+        // console.log(div);
+        ask_leave_list.append(div);
+
+
+      }
+    }
+    )
 }
 
 // SEND Ask Leave Data List

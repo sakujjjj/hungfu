@@ -155,9 +155,9 @@ def user():
     return render_template("staff.html")
 
 
-#   SHOW Ask Leave List API
+#   SHOW All Ask Leave List API
 @app.route("/api/staff", methods=["GET"])
-def show_ask_leave_list():
+def show_all_leave_list():
     try:
         connection_object = connection_pool.get_connection()
         mycursor = connection_object.cursor(buffered=True)
@@ -165,31 +165,22 @@ def show_ask_leave_list():
         sql = "SELECT * FROM hungfu.ask_leave where phone_number = %s"
         mycursor.execute(sql, (phone_number,))
         results = mycursor.fetchall()
-        # print(results[1][0])
-        # print(len(results))
+        print(results)
+        list = []
         for i in results:
-            # data = {"data": {
-            #     "phone_number": phone_number,
-            #     "ask_leave_day": i[2],
-            #     "ask_leave_reason": i[3]
-            # }}
-            data = [{
+            list.append({
+                "id": i[0],
                 "phone_number": phone_number,
                 "ask_leave_day": i[2],
                 "ask_leave_reason": i[3]
-            }]
+            })
 
-            data.append(data)
-            print(data)
-            print(type(data))
-        return jsonify({"ok": True}), 200
-        # return jsonify({"data":
-        #                 {
-        #                     "phone_number": results[1],
-        #                     "ask_leave_day": results[2],
-        #                     "ask_leave_reason": results[3]
-        #                 }
-        #                 })
+        # print(list)
+        # print(type(list))
+        # print(jsonify({"data": list}))
+        # print({"data": list})
+        return jsonify({"data": list}), 200
+
     except:
         return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
     finally:
@@ -198,9 +189,30 @@ def show_ask_leave_list():
             connection_object.close()
             print("MySQL connection is closed")
 
+
+#   SHOW ONE Ask Leave List API
+@app.route("/api/staff/<int:ask_leave_id>", methods=["GET"])
+def show_one_leave_list(ask_leave_id):
+    try:
+        connection_object = connection_pool.get_connection()
+        mycursor = connection_object.cursor(buffered=True)
+
+        sql = "SELECT * FROM hungfu.ask_leave where id = %s"
+        mycursor.execute(sql, (ask_leave_id,))
+        results = mycursor.fetchall()
+        print(results)
+        return jsonify({"data": results}), 200
+
+    except:
+        return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
+    finally:
+        if connection_object.is_connected():
+            mycursor.close()
+            connection_object.close()
+            print("MySQL connection is closed")
+
+
 #   create Ask Leave List API
-
-
 @app.route("/api/staff", methods=["POST"])
 def create_ask_leave_list():
     try:
@@ -228,10 +240,34 @@ def create_ask_leave_list():
             mycursor.close()
             connection_object.close()
             print("MySQL connection is closed")
+
+
+@app.route("/api/staff/<int:ask_leave_id>", methods=["DELETE"])
+def delete_ask_leave_list(ask_leave_id):
+    try:
+        connection_object = connection_pool.get_connection()
+        mycursor = connection_object.cursor(buffered=True)
+        print(mycursor)
+        print(ask_leave_id)
+        sql = "DELETE from hungfu.ask_leave where id = %s"
+        # mycursor.execute(sql, (ask_leave_id,))
+        mycursor.execute(sql)
+        results = mycursor.fetchone()
+        connection_object.commit()
+        print(results)
+        return jsonify({"ok": True}), 200
+
+    except:
+        return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
+    finally:
+        if connection_object.is_connected():
+            mycursor.close()
+            connection_object.close()
+            print("MySQL connection is closed")
+
+
 #######################   WEB API    ###########################
 # 註冊頁面
-
-
 @app.route("/signup", methods=["POST"])
 def signup():
     try:
