@@ -3,6 +3,7 @@ import json
 import requests
 import mysql.connector
 from mysql.connector import pooling
+import traceback
 
 # 建立 Application 物件
 app = Flask(__name__)
@@ -242,23 +243,30 @@ def create_ask_leave_list():
             print("MySQL connection is closed")
 
 
+#  DELETE ask leave list
 @app.route("/api/staff/<int:ask_leave_id>", methods=["DELETE"])
 def delete_ask_leave_list(ask_leave_id):
     try:
         connection_object = connection_pool.get_connection()
         mycursor = connection_object.cursor(buffered=True)
-        print(mycursor)
-        print(ask_leave_id)
-        sql = "DELETE from hungfu.ask_leave where id = %s"
-        # mycursor.execute(sql, (ask_leave_id,))
-        mycursor.execute(sql)
-        results = mycursor.fetchone()
-        connection_object.commit()
-        print(results)
-        return jsonify({"ok": True}), 200
 
-    except:
-        return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
+        sql = "DELETE FROM hungfu.ask_leave where id = %s"
+
+        mycursor.execute(sql, (ask_leave_id,))
+        rowcount = mycursor.rowcount
+        if rowcount > 0:
+            connection_object.commit()
+            return jsonify({"ok": True}), 200
+        else:
+            connection_object.rollback()
+            return jsonify({"error": True, "message": "資料不存在"}), 404
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        connection_object.rollback()
+        return {"error": True, "message": "伺服器內部錯誤"}, 500
+    # except:
+    #     return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
     finally:
         if connection_object.is_connected():
             mycursor.close()
