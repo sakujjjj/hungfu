@@ -243,6 +243,34 @@ def create_ask_leave_list():
             print("MySQL connection is closed")
 
 
+# UPDATE ask leave list
+@app.route("/api/staff/<int:ask_leave_id>", methods=["PUT"])
+def update_leave_list(ask_leave_id):
+    try:
+        connection_object = connection_pool.get_connection()
+        mycursor = connection_object.cursor(buffered=True)
+        json_data = request.get_json()
+        print("json_data:", json_data)
+        phone_number = json_data["phone_number"]
+        ask_leave_day = json_data["ask_leave_day"]
+        ask_leave_reason = json_data["ask_leave_reason"]
+        sql = "UPDATE hungfu.ask_leave SET phone_number = %s, ask_leave_day= %s, ask_leave_reason = %s WHERE id = %s"
+        mycursor.execute(sql, (phone_number, ask_leave_day,
+                         ask_leave_reason, ask_leave_id))
+        connection_object.commit()
+        return jsonify({"ok": True}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return {"error": True, "message": "伺服器內部錯誤"}, 500
+    # except:
+    #     return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
+    finally:
+        if connection_object.is_connected():
+            mycursor.close()
+            connection_object.close()
+            print("MySQL connection is closed")
+
+
 #  DELETE ask leave list
 @app.route("/api/staff/<int:ask_leave_id>", methods=["DELETE"])
 def delete_ask_leave_list(ask_leave_id):
