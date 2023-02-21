@@ -6,8 +6,8 @@ from mysql.connector import pooling
 import traceback
 
 # 建立 Application 物件
-app = Flask(__name__)
-# app = Flask(__name__, static_folder="static", static_url_path="/")
+app = Flask(__name__, static_folder="/", template_folder='templates')
+# app = Flask(__name__, static_folder="/", static_url_path="/")
 
 app.secret_key = "any string but secret"
 
@@ -23,9 +23,34 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/about/")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/user/")
+def user():
+    return render_template("user.html")
+
+
+@app.route("/user/staff/")
+def staff():
+    return render_template("staff.html")
+
+
+@app.route("/contact/")
+def contact():
+    return render_template("contact.html")
+
+
+@app.route("/faq/")
+def faq():
+    return render_template("faq.html")
+
+
 #   REST API
 #   GET USER LOGIN_INFO API
-@app.route("/api/user", methods=["GET"])
+@app.route("/api/user/", methods=["GET"])
 def get_user():
     print("phone_number:", session["phone_number"])
     print("name: ", session["name"])
@@ -151,9 +176,6 @@ def logout():
 
 
 # STAFF API
-@app.route("/staff")
-def user():
-    return render_template("staff.html")
 
 
 #   SHOW All Ask Leave List API

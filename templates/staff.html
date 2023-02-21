@@ -2,26 +2,97 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STAFF</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="免費估價，新竹鐵捲門維修，新竹鋁門窗，新竹遮雨棚，新竹採光罩，組合屋，房屋修繕，鋼構工程，新竹鐵皮屋，園區無塵室工程，以最優惠的價格買到最優秀。">
+  <meta name="keywords" content="新竹鋁門窗，新竹鐵工，新竹鐵捲門，竹北，新竹鐵捲門維修，新竹裝修，新竹設計，新竹店面裝潢，新竹鐵門，新竹鐵皮屋，新竹採光罩，新竹遮陽罩，新竹冷氣架，新竹冷氣籠">
+  <meta name="author" content="" />
+  <title>[鴻馥工程有限公司] - 新竹鐵捲門,新竹鋁門窗,新竹遮雨棚,新竹採光罩,新竹鋁門窗工程</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="../assets/logo.jpg" />
+  <!-- Bootstrap icons-->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" /> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="/css/styles.css" rel="stylesheet" />
 </head>
 
-<body>
-  <h1>STAFF PAGE</h1>
-  <div id="ask_leave_list"></div>
-  <br>
-  <label>
-    Enter your date:
-    <input type="date" name="ask_leave_day" id="ask_leave_day" />
-    Enter your reason:
-    <input type="text" id="ask_leave_reason">
-    <button id="ask_leave_button">Submit</button>
-  </label>
-  <br>
-  <button><a href="/">回首頁</a></button>
-  <script src="/static/staff.js"></script>
+<body class="d-flex flex-column">
+  <main class="flex-shrink-0">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container px-5">
+        <a class="navbar-brand" href="/">鴻馥工程</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about">關於我們</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contact">聯絡我們</a></li>
+            <li class="nav-item"><a class="nav-link" href="/faq">FAQ</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav_login" href="/user">登入</a></li>
+            <li class="nav-item"><a class="nav-link" id="nav_logout">登出</a></li>
+            <li class="nav-item"><a class="nav-link" href="/user/staff"><i class="bi bi-person-fill"
+                  id="nav_logo"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- ask leave section-->
+    <section class="bg-light py-5">
+      <div class="container px-5 my-5">
+        <div class="text-center mb-5">
+          <h1 class="fw-bolder">請假單</h1>
+          <p class="lead fw-normal text-muted mb-0">With our no hassle pricing plans</p>
+        </div>
+        <table class="table table-striped">
+          <tbody id="ask_leave_list"></tbody>
+        </table>
+
+
+
+        <div class="text-center mb-5">
+          <span>
+            請假日期:
+            <input type="date" name="ask_leave_day" id="ask_leave_day" />
+          </span>
+          <span>
+            請假原因:
+            <input type="text" id="ask_leave_reason">
+            <button class="btn btn-secondary" id="ask_leave_button">Submit</button>
+          </span>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+  <!-- Footer-->
+  <footer class="bg-dark py-4 mt-auto">
+    <div class="container px-5">
+      <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+        <div class="col-auto">
+          <div class="small m-0 text-white">Copyright &copy; Hung Fu Engineering Co.,Ltd. 2023</div>
+        </div>
+        <div class="col-auto">
+          <a class="link-light small" href="#!">Design by</a>
+          <span class="text-white mx-1">&middot;</span>
+          <a class="link-light small" href="tel:0934085478">Jack</a>
+          <span class="text-white mx-1">&middot;</span>
+          <a class="link-light small" href="https://github.com/sakujjjj/hungfu">Gibhub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core theme JS-->
+  <script src="/js/staff.js"></script>
+
+
 </body>
 
 </html>

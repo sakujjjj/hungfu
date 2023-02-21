@@ -1,45 +1,76 @@
-fetch("api/user")
+//  FOR USER
+// method:GET check user info
+const nav_login = document.getElementById("nav_login");
+const nav_logout = document.getElementById("nav_logout");
+const nav_logo = document.getElementById("nav_logo")
+fetch("/api/user")
   .then(res => res.json())
   // .then(data => console.log(data["data"]))
-  .then((res) => {
-    if (res["data"] == null) {
-      window.location.replace("/");
-    }
-    else {
-      console.log("user info:", res["data"])
+  .then((data) => {
+    // console.log("method:GET:", data)
+    console.log("user info:", data["data"])
+
+    if (data["data"] != null) {
+      nav_login.style.display = "none";
+      nav_logout.style.display = "block";
+      nav_logo.innerHTML = data["data"]["name"]
+      nav_logo.style.display = "block";
       showAskLeaveData()
+    } else {
+      location.href = "/";
     }
   })
 
 
+// method:DELETE log out
+nav_logout.addEventListener("click", function () {
+  fetch("/api/user", {
+    method: "DELETE",
+    headers: { "content-type": "application/json" },
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("method:DELETE", data);
+      location.reload();
+    })
+})
+
+
+//  FOR ASK LEAVE 
 //  SHOW Ask Leave List & create delete , update button
 function showAskLeaveData() {
   let ask_leave_list = document.getElementById("ask_leave_list");
-  fetch("api/staff")
+  fetch("/api/staff")
     .then(res => res.json())
     .then(res => {
       console.log(res["data"]);
-      // console.log(res["data"][0]);
-      // console.log(res["data"].length);
       for (i = 0; i < res["data"].length; i++) {
         // console.log(res["data"][i]);
-        let div = document.createElement("div");
+        let tr = document.createElement("tr");
+        let td = document.createElement("td");
+        let spanDelete = document.createElement("span");
+        let spanUpdate = document.createElement("span");
         let deleteButton = document.createElement("button");
         let updateButton = document.createElement("button");
-        div.append("請假日期: " + JSON.stringify(res["data"][i]["ask_leave_day"]) + " " + "請假原因: " + JSON.stringify(res["data"][i]["ask_leave_reason"]));
+        tr.className = "table-dark";
+        td.className = "table-secondary";
+        spanDelete.className = "span_button";
+        spanUpdate.className = "span_button";
+        deleteButton.className = "btn btn-primary";
+        updateButton.className = "btn btn-primary";
+        td.append("請假日期: " + JSON.stringify(res["data"][i]["ask_leave_day"]) + " " + "請假原因: " + JSON.stringify(res["data"][i]["ask_leave_reason"]));
         // console.log(div);
         deleteButton.innerHTML = "刪除";
         deleteButton.setAttribute("data-id", res["data"][i]["id"]);
         deleteButton.addEventListener("click", deleteAskLeave);
         updateButton.innerHTML = "更新";
         updateButton.setAttribute("data-id", res["data"][i]["id"]);
+        spanDelete.appendChild(deleteButton);
+        spanUpdate.appendChild(updateButton);
+        td.append(spanDelete, spanUpdate);
 
-        // div.append(deleteButton);
-        // div.append(updateButton);
-        div.append(updateButton, deleteButton)
-
-
-        ask_leave_list.appendChild(div);
+        tr.append(td);
+        ask_leave_list.appendChild(tr);
 
       }
     }
@@ -47,11 +78,11 @@ function showAskLeaveData() {
 }
 
 
-//  delete Ask Leave List button
+//  delete button
 function deleteAskLeave(btn) {
   const askLeaveId = btn.target.getAttribute('data-id');
   console.log(askLeaveId);
-  fetch(`api/staff/${askLeaveId}`, {
+  fetch(`/api/staff/${askLeaveId}`, {
     method: "DELETE",
   })
     .then(res => {
@@ -60,28 +91,25 @@ function deleteAskLeave(btn) {
 }
 
 
-//  update Ask Leave List button
-
-
 //  create Ask Leave List
 let ask_leave_button = document.getElementById("ask_leave_button")
 ask_leave_button.addEventListener("click", function () {
   let ask_leave_day = document.getElementById("ask_leave_day").value;
   let ask_leave_reason = document.getElementById("ask_leave_reason").value
-  // console.log(ask_leave_day, ask_leave_reason);
-  fetch("api/user")
+  console.log(ask_leave_day, ask_leave_reason);
+  fetch("/api/user")
     .then(res => res.json())
     .then(res => {
       let phone_number = res["data"]["phone_number"]
-      // console.log(ask_leave_day, ask_leave_reason, res["data"]["phone_number"]);
       sendAskLeaveData(ask_leave_day, ask_leave_reason, phone_number)
     })
 })
 
-// SEND Ask Leave Data List
+
+// SEND Ask Leave Data 
 function sendAskLeaveData(ask_leave_day, ask_leave_reason, phone_number) {
   console.log(ask_leave_day, ask_leave_reason, phone_number);
-  fetch("api/staff", {
+  fetch("/api/staff", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(
@@ -93,7 +121,6 @@ function sendAskLeaveData(ask_leave_day, ask_leave_reason, phone_number) {
   })
     .then(res => res.json())
     .then(res => {
-      // console.log("sendAskLeaveData:", res);
       if (res["ok"] == true) {
         console.log("ok");
         location.reload();
@@ -102,6 +129,3 @@ function sendAskLeaveData(ask_leave_day, ask_leave_reason, phone_number) {
       }
     })
 }
-
-
-// DELETE ask leave list
