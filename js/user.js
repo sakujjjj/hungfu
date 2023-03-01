@@ -7,7 +7,9 @@ fetch("/api/user")
   .then((data) => {
     console.log("user info:", data["data"])
 
-    if (data["data"] != null) {
+    if (data["data"]["level"] == 1) {
+      location.href = "/user/admin";
+    } else if (data["data"]["level"] == 0) {
       location.href = "/user/staff";
     }
   })
@@ -34,8 +36,12 @@ loginButton.addEventListener("click", function () {
     .then((data) => {
       console.log("method:PATCH", data);
       if (data["ok"] == true) {
-        // location.reload();
-        location.href = "/user/staff";
+        if (data["level"] == 1) {
+          location.href = "/user/admin";
+        } else {
+          location.href = "/user/staff";
+        }
+
       } else {
         console.log("message", data["message"])
         login_fail.style.display = "block";
