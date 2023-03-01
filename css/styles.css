@@ -12275,3 +12275,15 @@ html {
 a {
   text-decoration: none;
 }
+
+/* #ask_leave_section {
+  display: none;
+} */
+
+#enter_tsmc_section {
+  display: none;
+}
+
+#sign_up_section {
+  display: none;
+}

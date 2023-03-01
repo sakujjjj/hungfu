@@ -7,7 +7,7 @@
   <meta name="description" content="免費估價，新竹鐵捲門維修，新竹鋁門窗，新竹遮雨棚，新竹採光罩，組合屋，房屋修繕，鋼構工程，新竹鐵皮屋，園區無塵室工程，以最優惠的價格買到最優秀。">
   <meta name="keywords" content="新竹鋁門窗，新竹鐵工，新竹鐵捲門，竹北，新竹鐵捲門維修，新竹裝修，新竹設計，新竹店面裝潢，新竹鐵門，新竹鐵皮屋，新竹採光罩，新竹遮陽罩，新竹冷氣架，新竹冷氣籠">
   <meta name="author" content="" />
-  <title>staff</title>
+  <title>admin</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="../assets/logo.jpg" />
   <!-- Bootstrap icons-->
@@ -40,34 +40,78 @@
         </div>
       </div>
     </nav>
-    <!-- ask leave section-->
+    <!-- admin section -->
     <section class="bg-light py-5">
+      <div class="text-center mb-5">
+        <h1 class="fw-bolder">後台管理</h1>
+        <!-- show all staff ask leave section-->
+        <button class="btn btn-primary" id="show_approve_button">批准假單</button>
+        <button class="btn btn-primary" id="show_enter_tsmc_button">預約入廠</button>
+        <button class="btn btn-primary" id="show_sign_up_button">註冊員工</button>
+      </div>
+    </section>
+
+
+    <!-- ask leave section-->
+    <section class="bg-light py-5" id="ask_leave_section">
       <div class="container px-5 my-5">
         <div class="text-center mb-5">
-          <h1 class="fw-bolder">請假單</h1>
-          <p class="lead fw-normal text-muted mb-0">請輸入請假日期與原因</p>
+          <h2 class="fw-bolder">員工請假單</h2>
+          <p class="lead fw-normal text-muted mb-0">批准假單</p>
         </div>
         <table class="table table-striped">
           <tbody id="ask_leave_list"></tbody>
         </table>
-
-
-
-        <div class="text-center mb-5">
-          <span>
-            請假日期:
-            <input type="date" name="ask_leave_day" id="ask_leave_day" />
-          </span>
-          <span>
-            請假原因:
-            <input type="text" id="ask_leave_reason">
-            <button class="btn btn-secondary" id="ask_leave_button">Submit</button>
-          </span>
-        </div>
-
       </div>
     </section>
-
+    <!-- enter TSMC section-->
+    <section class="bg-light py-5" id="enter_tsmc_section">
+      <div class="container px-5 my-5">
+        <div class="text-center mb-5">
+          <h2 class="fw-bolder">預約進廠人員</h2>
+          <p class="lead fw-normal text-muted mb-0">請點選要預約的人員及時間</p>
+        </div>
+        <table class="table table-striped">
+          <tbody id="enter_tsmc_list"></tbody>
+        </table>
+        <div class="text-center mb-5">
+          <span>
+            預約日期:
+            <input type="date" name="enter_tsmc_day" id="enter_tsmc_day" />
+          </span>
+          <span>
+            <button class="btn btn-secondary" id="enter_tsmc_button">確定預約</button>
+          </span>
+        </div>
+      </div>
+    </section>
+    <!-- sign up section-->
+    <section class="bg-light py-5" id="sign_up_section">
+      <div class="container px-5 my-5">
+        <div class="text-center mb-5">
+          <h2 class="fw-bolder">註冊員工</h2>
+          <p class="lead fw-normal text-muted mb-0">請輸入新員工資訊</p>
+          <p class="text-danger fw-lighter fs-4 " id="sign_up_info"></p>
+        </div>
+        <div class="mb-3">
+          <table class="table table-striped">
+            姓名<input type="text" class="form-control" id="sign_up_user_name" name="name">
+            <br />
+            密碼<input type="password" class="form-control" id="sign_up_password" name="password">
+            <br />
+            電話<input type="text" class="form-control" id="sign_up_phone_number" name="phone_number" pattern="09\d{8}"
+              required>
+            <br />
+            e-mail<input type="text" class="form-control" id="sign_up_email" name="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+            <br />
+            TSMC工號<input type="text" class="form-control" id="sign_up_tsmc_id" name="tsmc_id">
+            <br />
+            <button type="submit" class="btn btn-primary" id="sign_up_button">註冊</button>
+          </table>
+        </div>
+      </div>
+    </section>
   </main>
   <!-- Footer-->
   <footer class="bg-dark py-4 mt-auto">
@@ -88,7 +132,7 @@
   <!-- Bootstrap core JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Core theme JS-->
-  <script src="/js/staff.js"></script>
+  <script src="/js/admin.js"></script>
 
 
 </body>
