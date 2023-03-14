@@ -22,7 +22,7 @@ app.secret_key = "any string but secret"
 
 #   Connection pool
 connection_pool = pooling.MySQLConnectionPool(
-    pool_name="pynative_pool", pool_size=5, pool_reset_session=True, host='localhost', database='hungfu', user='root', password='1234')
+    pool_name="pynative_pool", pool_size=5, pool_reset_session=True, host='localhost',port = '5000', database='hungfu', user='root', password='1234')
 
 
 # Pages
@@ -59,13 +59,6 @@ def contact():
 @app.route("/faq/")
 def faq():
     return render_template("faq.html")
-
-
-#   REST API
-
-
-# STAFF API
-
 
 
 

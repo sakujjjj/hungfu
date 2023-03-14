@@ -11,7 +11,7 @@ user_api = Blueprint("user", __name__)
 
 #   Connection pool
 connection_pool = pooling.MySQLConnectionPool(
-    pool_name="pynative_pool", pool_size=5, pool_reset_session=True, host='localhost', database='hungfu', user='root', password='1234')
+    pool_name="pynative_pool", pool_size=5, pool_reset_session=True, host='localhost',port = '5000', database='hungfu', user='root', password='1234')
 
 
 #   GET USER LOGIN_INFO API
