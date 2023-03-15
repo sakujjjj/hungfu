@@ -1,6 +1,6 @@
 <h1 align="center">Hung Fu Engineering Co.,Ltd.</h1>
 
-## 🔗[URL](http://34.192.97.68:3000/)
+## 🔗<a> http://hungfu.info/
 
 ### 🔑 DEMO 
 - Manager account: `0911111111`/`1234`
