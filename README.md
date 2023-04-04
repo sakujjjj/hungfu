@@ -1,8 +1,9 @@
 <h1 align="center">Hung Fu Engineering Co.,Ltd.</h1>
 
-## 🔗<a> http://hungfu.info/
+🔗<a> http://hungfu.info/
 
-### 🔑 DEMO 
+
+  ## 🔑 DEMO account/password
 - Manager account: `0911111111`/`1234`
 - Staff account: `0912345678`/`1234`
 
@@ -18,8 +19,13 @@
 
 ## Staff:
 ![image](https://user-images.githubusercontent.com/95430501/221372532-b0d9cb74-3b0e-40a6-8d6a-9a1d187024f4.png)
+  
+## Automatic scheduling to fill in the factory entry form
+![crawler_DEMO2](https://user-images.githubusercontent.com/95430501/229868298-06feabd7-180f-4845-a57f-9daa5fda7679.gif)
+
 ### Main Features:
 - automatic scheduling send the information of employees entering the TSMC
+  <br>(Currently on the local side, it is being integrated into the cloud)
 - Job Level Verification manager or staff
 - manager 
   - Log in, Sign up, 
